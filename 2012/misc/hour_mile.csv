@@ -1,0 +1,129 @@
+0,16,0,Start: Oceanside CA
+1,17,23,Start: Oceanside CA +23mi
+2,18,43,Start: Oceanside CA +43mi
+3,19,62,TS 1: Lake Henshaw CA +5.2mi
+4,20,87,TS 1: Lake Henshaw CA +30.2mi
+5,21,112,TS 1: Lake Henshaw CA +55.2mi
+6,22,137,TS 1: Lake Henshaw CA +80.2mi
+7,23,160,TS 2: Brawley CA +14.8mi
+8,0,183,TS 2: Brawley CA +37.8mi
+9,1,208,TS 2: Brawley CA +62.8mi
+10,2,232,TS 2: Brawley CA +86.8mi
+11,3,256,TS 3: Blythe CA +21.1mi
+12,4,280,TS 3: Blythe CA +45.1mi
+13,5,303,TS 4: Parker AZ +16.7mi
+14,6,327,TS 4: Parker AZ +40.7mi
+15,7,350,TS 5: Salome AZ +7.7mi
+16,8,373,TS 5: Salome AZ +30.7mi
+17,9,396,TS 6: Congress AZ +1mi
+18,10,416,TS 6: Congress AZ +21mi
+19,11,436,TS 6: Congress AZ +41mi
+20,12,460,TS 7: Prescott AZ +18.9mi
+21,13,484,TS 8: Cottonwood AZ +1.3mi
+22,14,505,TS 8: Cottonwood AZ +22.3mi
+23,15,524,TS 8: Cottonwood AZ +41.3mi
+24,16,547,TS 9: Flagstaff AZ +10.9mi
+25,17,573,TS 9: Flagstaff AZ +36.9mi
+26,18,598,TS 9: Flagstaff AZ +61.9mi
+27,19,620,TS 10: Tuba City AZ +12mi
+28,20,642,TS 10: Tuba City AZ +34mi
+29,21,666,TS 10: Tuba City AZ +58mi
+30,22,691,TS 11: Kayenta AZ +11.2mi
+31,23,716,TS 11: Kayenta AZ +36.2mi
+32,0,738,TS 12: Mexican Hat UT +13.4mi
+33,1,762,TS 12: Mexican Hat UT +37.4mi
+34,2,785,TS 13: Montezuma Creek UT +20.8mi
+35,3,807,TS 13: Montezuma Creek UT +42.8mi
+36,4,829,TS 14: Cortez CO +14.6mi
+37,5,851,TS 14: Cortez CO +36.6mi
+38,6,875,TS 15: Durango CO +16.4mi
+39,7,899,TS 15: Durango CO +40.4mi
+40,8,921,TS 16: Pagosa Springs CO +8.1mi
+41,9,938,TS 16: Pagosa Springs CO +25.1mi
+42,10,962,TS 17: South Fork CO +1.1mi
+43,11,987,TS 17: South Fork CO +26.1mi
+44,12,1011,TS 18:  Alamosa CO +3.5mi
+45,13,1035,TS 18:  Alamosa CO +27.5mi
+46,14,1058,TS 18:  Alamosa CO +50.5mi
+47,15,1079,TS 19: La Veta CO +13.2mi
+48,16,1103,TS 19: La Veta CO +37.2mi
+49,17,1128,TS 19: La Veta CO +62.2mi
+50,18,1153,TS 20: TrinidadCO +21.8mi
+51,19,1179,TS 20: TrinidadCO +47.8mi
+52,20,1203,TS 21: Kim CO +0.4mi
+53,21,1228,TS 21: Kim CO +25.4mi
+54,22,1253,TS 21: Kim CO +50.4mi
+55,23,1278,TS 22: Walsh CO +7.1mi
+56,0,1302,TS 22: Walsh CO +31.1mi
+57,1,1327,TS 23: Ulysses KS +1.9mi
+58,2,1350,TS 23: Ulysses KS +24.9mi
+59,3,1374,TS 23: Ulysses KS +48.9mi
+60,4,1398,TS 24: Montezuma KS +22.7mi
+61,5,1422,TS 24: Montezuma KS +46.7mi
+62,6,1446,TS 25: Greensburg KS +4.6mi
+63,7,1471,TS 25: Greensburg KS +29.6mi
+64,8,1495,TS 26: Pratt KS +21.5mi
+65,9,1519,TS 26: Pratt KS +45.5mi
+66,10,1543,TS 26: Pratt KS +69.5mi
+67,11,1567,TS 27: Maize KS +16.7mi
+68,12,1591,TS 28: El Dorado KS +6.7mi
+69,13,1615,TS 28: El Dorado KS +30.7mi
+70,14,1639,TS 28: El Dorado KS +54.7mi
+71,15,1663,TS 29: Yates Center KS +14.1mi
+72,16,1687,TS 29: Yates Center KS +38.1mi
+73,17,1711,TS 30: Ft Scott KS +3.1mi
+74,18,1735,TS 30: Ft Scott KS +27.1mi
+75,19,1758,TS 30: Ft Scott KS +50.1mi
+76,20,1782,TS 31: Weaubleau MO +7.7mi
+77,21,1805,TS 31: Weaubleau MO +30.7mi
+78,22,1829,TS 32: Camdenton MO +5.6mi
+79,23,1852,TS 32: Camdenton MO +28.6mi
+80,0,1877,TS 32: Camdenton MO +53.6mi
+81,1,1900,TS 33: Jefferson City MO +19.2mi
+82,2,1924,TS 33: Jefferson City MO +43.2mi
+83,3,1948,TS 33: Jefferson City MO +67.2mi
+84,4,1971,TS 34: Washington MO +13.4mi
+85,5,1995,TS 34: Washington MO +37.4mi
+86,6,2019,TS 34: Washington MO +61.4mi
+87,7,2043,TS 35: Mississippi River West Alton MO +13mi
+88,8,2067,TS 35: Mississippi River West Alton MO +37mi
+89,9,2090,TS 36: Greenville IL +13.9mi
+90,10,2114,TS 36: Greenville IL +37.9mi
+91,11,2138,TS 37: Effingham IL +12.7mi
+92,12,2162,TS 37: Effingham IL +36.7mi
+93,13,2186,TS 37: Effingham IL +60.7mi
+94,14,2209,TS 38: Sullivan IN +10.9mi
+95,15,2233,TS 38: Sullivan IN +34.9mi
+96,16,2256,TS 38: Sullivan IN +57.9mi
+97,17,2280,TS 39: Bloomington IN +14.5mi
+98,18,2304,TS 39: Bloomington IN +38.5mi
+99,19,2327,TS 39: Bloomington IN +61.5mi
+100,20,2350,TS 40: Greensburg IN +21.3mi
+101,21,2372,TS 40: Greensburg IN +43.3mi
+102,22,2396,TS 41: Oxford OH +17.8mi
+103,23,2420,TS 41: Oxford OH +41.8mi
+104,0,2443,TS 42: Blanchester OH +14.5mi
+105,1,2468,TS 42: Blanchester OH +39.5mi
+106,2,2491,TS 43: Chillicothe OH +4.4mi
+107,3,2514,TS 43: Chillicothe OH +27.4mi
+108,4,2538,TS 43: Chillicothe OH +51.4mi
+109,5,2562,TS 44: Athens OH +16.2mi
+110,6,2585,TS 44: Athens OH +39.2mi
+111,7,2608,TS 44: Athens OH +62.2mi
+112,8,2631,TS 45: Ellenboro WV +18.5mi
+113,9,2654,TS 45: Ellenboro WV +41.5mi
+114,10,2677,TS 45: Ellenboro WV +64.5mi
+115,11,2695,TS 46: Grafton WV +17.2mi
+116,12,2714,TS 46: Grafton WV +36.2mi
+117,13,2735,TS 46: Grafton WV +57.2mi
+118,14,2760,TS 47: Keyser WV +12.3mi
+119,15,2783,TS 48: Cumberland MD +6.7mi
+120,16,2803,TS 48: Cumberland MD +26.7mi
+121,17,2824,TS 49: Hancock MD +10.6mi
+122,18,2846,TS 49: Hancock MD +32.6mi
+123,19,2869,TS 50: Rouzerville PA +7.1mi
+124,20,2892,TS 50: Rouzerville PA +30.1mi
+125,21,2915,TS 51: Hanover PA +12.8mi
+126,22,2939,TS 52: Mt Airy MD +0.2mi
+127,23,2963,TS 52: Mt Airy MD +24.2mi
+128,0,2987,TS 53: Odenton MD +8.7mi

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0px; padding: 0px }
+  #map_canvas { height: 100% }
+</style>
+
+<script type="text/javascript"
+    src="http://maps.google.com/maps/api/js?sensor=false">
+</script>
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+
+<script type="text/javascript">
+  var map;
+  var geoXml;
+  var picasaXml;
+  var RAAMline;
+
+var timestations = {};
+timestations['Start-OceansideCA'] = {center: new google.maps.LatLng(33.194410, -117.384290)};
+timestations['TS1-LakeHenshawCA'] = {center: new google.maps.LatLng(33.231990, -116.759790)};
+timestations['TS2-BrawleyCA'] = {center: new google.maps.LatLng(32.978690, -115.548100)};
+timestations['TS3-BlytheCA'] = {center: new google.maps.LatLng(33.610530, -114.587520)};
+timestations['TS4-ParkerAZ'] = {center: new google.maps.LatLng(34.144590, -114.285970)};
+timestations['TS5-SalomeAZ'] = {center: new google.maps.LatLng(33.786580, -113.605110)};
+timestations['TS6-CongressAZ'] = {center: new google.maps.LatLng(34.162080, -112.852350)};
+timestations['TS7-PrescottAZ'] = {center: new google.maps.LatLng(34.563970, -112.484860)};
+timestations['TS8-CottonwoodAZ'] = {center: new google.maps.LatLng(34.727590, -112.010250)};
+timestations['TS9-FlagstaffAZ'] = {center: new google.maps.LatLng(35.226380, -111.580370)};
+timestations['TS10-TubaCityAZ'] = {center: new google.maps.LatLng(36.118490, -111.229230)};
+timestations['TS11-KayentaAZ'] = {center: new google.maps.LatLng(36.708250, -110.246890)};
+timestations['TS12-MexicanHatUT'] = {center: new google.maps.LatLng(37.148720, -109.859460)};
+timestations['TS13-MontezumaCreekUT'] = {center: new google.maps.LatLng(37.260130, -109.302320)};
+timestations['TS14-CortezCO'] = {center: new google.maps.LatLng(37.348560, -108.560370)};
+timestations['TS15-DurangoCO'] = {center: new google.maps.LatLng(37.260496, -107.877297)};
+timestations['TS16-PagosaSpringsCO'] = {center: new google.maps.LatLng(37.254130, -107.078030)};
+timestations['TS17-SouthForkCO'] = {center: new google.maps.LatLng(37.672630, -106.618770)};
+timestations['TS18-AlamosaCO'] = {center: new google.maps.LatLng(37.473300, -105.856270)};
+timestations['TS19-LaVetaCO'] = {center: new google.maps.LatLng(37.507830, -105.010980)};
+timestations['TS20-TrinidadCO'] = {center: new google.maps.LatLng(37.168320, -104.509190)};
+timestations['TS21-KimCO'] = {center: new google.maps.LatLng(37.246920, -103.355310)};
+timestations['TS22-WalshCO'] = {center: new google.maps.LatLng(37.389277, -102.277232)};
+timestations['TS23-UlyssesKS'] = {center: new google.maps.LatLng(37.575948, -101.352475)};
+timestations['TS24-MontezumaKS'] = {center: new google.maps.LatLng(37.596970, -100.449200)};
+timestations['TS25-GreensburgKS'] = {center: new google.maps.LatLng(37.606000, -99.294530)};
+timestations['TS26-PrattKS'] = {center: new google.maps.LatLng(37.645280, -98.712630)};
+timestations['TS27-MaizeKS'] = {center: new google.maps.LatLng(37.780050, -97.462620)};
+timestations['TS28-ElDoradoKS'] = {center: new google.maps.LatLng(37.816160, -96.892320)};
+timestations['TS29-YatesCenterKS'] = {center: new google.maps.LatLng(37.879060, -95.739080)};
+timestations['TS30-FtScottKS'] = {center: new google.maps.LatLng(37.845110, -94.707530)};
+timestations['TS31-WeaubleauMO'] = {center: new google.maps.LatLng(37.891000, -93.542400)};
+timestations['TS32-CamdentonMO'] = {center: new google.maps.LatLng(38.009340, -92.742820)};
+timestations['TS33-JeffersonCityMO'] = {center: new google.maps.LatLng(38.565196, -92.186018)};
+timestations['TS34-WashingtonMO'] = {center: new google.maps.LatLng(38.539290, -91.014020)};
+timestations['TS35-MississippiRiverWestAltonMO'] = {center: new google.maps.LatLng(38.874808, -90.192392)};
+timestations['TS36-GreenvilleIL'] = {center: new google.maps.LatLng(38.878800, -89.389940)};
+timestations['TS37-EffinghamIL'] = {center: new google.maps.LatLng(39.116510, -88.556580)};
+timestations['TS38-SullivanIN'] = {center: new google.maps.LatLng(39.102676, -87.426981)};
+timestations['TS39-BloomingtonIN'] = {center: new google.maps.LatLng(39.161850, -86.498190)};
+timestations['TS40-GreensburgIN'] = {center: new google.maps.LatLng(39.336760, -85.479660)};
+timestations['TS41-OxfordOH'] = {center: new google.maps.LatLng(39.504660, -84.748990)};
+timestations['TS42-BlanchesterOH'] = {center: new google.maps.LatLng(39.292130, -83.990280)};
+timestations['TS43-ChillicotheOH'] = {center: new google.maps.LatLng(39.338250, -82.950450)};
+timestations['TS44-AthensOH'] = {center: new google.maps.LatLng(39.335800, -82.065280)};
+timestations['TS45-EllenboroWV'] = {center: new google.maps.LatLng(39.262860, -81.054960)};
+timestations['TS46-GraftonWV'] = {center: new google.maps.LatLng(39.346770, -80.004930)};
+timestations['TS47-KeyserWV'] = {center: new google.maps.LatLng(39.399895, -79.010290)};
+timestations['TS48-CumberlandMD'] = {center: new google.maps.LatLng(39.678206, -78.736727)};
+timestations['TS49-HancockMD'] = {center: new google.maps.LatLng(39.703779, -78.180836)};
+timestations['TS50-RouzervillePA'] = {center: new google.maps.LatLng(39.736220, -77.524930)};
+timestations['TS51-HanoverPA'] = {center: new google.maps.LatLng(39.763203, -76.960432)};
+timestations['TS52-MtAiryMD'] = {center: new google.maps.LatLng(39.359250, -77.160530)};
+timestations['TS53-OdentonMD'] = {center: new google.maps.LatLng(39.080893, -76.690271)};
+timestations['TS54-Annapolis'] = {center: new google.maps.LatLng(38.993850, -76.537070)};
+timestations['TS55-Finish'] = {center: new google.maps.LatLng(38.977270, -76.485710)}
+var timestation_circle;
+
+  function initialize() {
+    var latlng = new google.maps.LatLng(36.7,-96.6);
+    var myOptions = {
+      zoom: 4,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.HYBRID
+    };
+    
+    map = new google.maps.Map(document.getElementById("map_canvas"),  myOptions);
+    
+    var latitude = new google.maps.KmlLayer('http://www.google.com/latitude/apps/badge/api?user=2004503882903333088&type=kml');
+    latitude.setMap(map);
+
+    var picasa = new google.maps.KmlLayer('http://picasaweb.google.com/data/feed/base/user/ViaSatRacing/albumid/5473850858015925905?kind=photo&alt=kml');
+    picasa.setMap(map);
+
+    for (var TS in timestations) {
+      var TSoptions = {
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        map: map,
+        center: timestations[TS].center,
+        radius: 2000
+      };
+      timestation_circle = new google.maps.Circle(TSoptions);
+    }
+}
+
+</script>
+</head>
+
+<body onload="initialize()">
+  <div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+
+</html>
