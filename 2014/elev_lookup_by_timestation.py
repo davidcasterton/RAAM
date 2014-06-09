@@ -9,21 +9,21 @@ from xml.dom import minidom
 
 
 DEBUG = False
-INPUT_DIR = "timestation_waypoints"
-OUTPUT_DIR = "timestation_waypoints_with_elev"
+CLEAN_ROUTE_DIR = "timestation_waypoints"
+CLEAN_ROUTE_WITH_ELEV_DIR = "timestation_waypoints_with_elev"
 
 
-if not os.path.exists(OUTPUT_DIR):
-    os.mkdir(OUTPUT_DIR)
+if not os.path.exists(CLEAN_ROUTE_WITH_ELEV_DIR):
+    os.mkdir(CLEAN_ROUTE_WITH_ELEV_DIR)
 
-for input_file in os.listdir(INPUT_DIR):
+for input_file in os.listdir(CLEAN_ROUTE_DIR):
     if input_file.split(".")[1] != "csv":
         continue
-    input_path = os.path.join(INPUT_DIR, input_file)
+    input_path = os.path.join(CLEAN_ROUTE_DIR, input_file)
 
     reader = csv.reader(open(input_path, "r"))
 
-    output_path = os.path.join(OUTPUT_DIR, input_file.split(".")[0] + "_with_elevation.csv")
+    output_path = os.path.join(CLEAN_ROUTE_WITH_ELEV_DIR, input_file   )
     if os.path.exists(output_path):
         os.remove(output_path)
     writer = csv.writer(open(output_path, "a"))
@@ -103,8 +103,6 @@ for input_file in os.listdir(INPUT_DIR):
             # extract the interesting parts
             elev = float(children.getElementsByTagName('Elevation')[0].firstChild.data)
             data_source = children.getElementsByTagName('Data_Source')[0].firstChild.data
-
-            # print to stdout
 
         writer.writerow([lat, lon, name, elev])
 

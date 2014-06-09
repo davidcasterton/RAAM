@@ -4,12 +4,16 @@ import csv
 from math import radians, cos, sin, asin, sqrt
 import os
 import pdb
+import progressbar
+import urllib, urllib2
+from xml.dom import minidom
 
 
 DEBUG = False
 MIN_WAYPOINT_MILES = 0.25
 MAX_WAYPOINT_MILES = 0.5
-OUTPUT_DIR = os.path.join(os.getcwd(), "timestation_waypoints")
+CLEAN_ROUTE_DIR = os.path.join(os.getcwd(), "timestation_waypoints")
+CLEAN_ROUTE_WITH_ELEV_DIR = os.path.join(os.getcwd(), "timestation_waypoints_with_elev")
 
 
 class GpsWaypoint(object):
@@ -61,8 +65,8 @@ class RaamTrack(object):
 
         self.timestations = {}
 
-        if not os.path.exists(OUTPUT_DIR):
-            os.mkdir(OUTPUT_DIR)
+        if not os.path.exists(CLEAN_ROUTE_DIR):
+            os.mkdir(CLEAN_ROUTE_DIR)
 
     class TimeStation(object):
         def __init__(self, waypoint):
@@ -79,7 +83,7 @@ class RaamTrack(object):
                     self.number = 0
 
             # create csv writer
-            csv_path = os.path.join(OUTPUT_DIR, "%s_%s.csv" % (self.number, self.name))
+            csv_path = os.path.join(CLEAN_ROUTE_DIR, "%s_%s.csv" % (self.number, self.name))
             if os.path.exists(csv_path):
                 os.remove(csv_path)
             fileobj = open(csv_path, "a")
@@ -95,9 +99,7 @@ class RaamTrack(object):
 
             miles = haversine(waypoint1, middle_waypoint)
 
-            if miles > 15:
-                pdb.set_trace()
-            elif miles > MAX_WAYPOINT_MILES:
+            if miles > MAX_WAYPOINT_MILES:
                 self.extrapolate(waypoint1, middle_waypoint)
                 self.add_route_waypoint(middle_waypoint)
                 self.extrapolate(middle_waypoint, waypoint2)
@@ -127,7 +129,7 @@ class RaamTrack(object):
         # check if passed next timestation
         if ((self.timestations.get(timestation_index+1)) and
                 (waypoint.lon > self.timestations.get(timestation_index+1).waypoint.lon)):
-            _print("changing from TS '%s' (longitude %s) to '%s' (longitude %s). current waypoint '%s'" % (
+            print("changing from TS '%s' (longitude %s) to '%s' (longitude %s). current waypoint '%s'" % (
                 self.timestations[timestation_index].name, waypoint.lon,
                 self.timestations[timestation_index+1].name, self.timestations.get(timestation_index+1).waypoint.lon,
                 waypoint))
@@ -143,7 +145,7 @@ class RaamTrack(object):
 
         return timestation_index
 
-    def clean(self):
+    def clean_route(self):
         route_reader = csv.reader(self.route_file)
         timestation_reader = csv.reader(self.timestation_file)
 
@@ -164,6 +166,103 @@ class RaamTrack(object):
 
             timestation_index = self.add_route_waypoint_to_timestation(waypoint, timestation_index)
 
+    def add_elevation_to_route(self):
+        if not os.path.exists(CLEAN_ROUTE_WITH_ELEV_DIR):
+            os.mkdir(CLEAN_ROUTE_WITH_ELEV_DIR)
+
+        for input_file in os.listdir(CLEAN_ROUTE_DIR):
+            if input_file.split(".")[1] != "csv":
+                continue
+            input_path = os.path.join(CLEAN_ROUTE_DIR, input_file)
+
+            reader = csv.reader(open(input_path, "r"))
+
+            output_path = os.path.join(CLEAN_ROUTE_WITH_ELEV_DIR, input_file)
+            if os.path.exists(output_path):
+                os.remove(output_path)
+            writer = csv.writer(open(output_path, "a"))
+            writer.writerow(["Latitude", "Longitude", "Name", "Elevation"])
+
+            # init progress bar
+            total_lines = sum(1 for line in open(input_path))
+            widgets = [input_file, progressbar.Percentage(), ' ', progressbar.Bar(marker='=', left='[', right=']'),
+                       ' ', progressbar.ETA(), ' ', progressbar.FileTransferSpeed()]
+            progress_bar = progressbar.ProgressBar(widgets=widgets, maxval=total_lines)
+            progress_bar.start()
+
+
+            # process the csv file
+            output = ""
+            for row in reader:
+                row_num = int(reader.line_num)
+                if row_num == 1:
+                    continue
+
+                if DEBUG and row_num > 50:
+                    break
+
+                lon = float(row[1])
+                lat = float(row[0])
+                name = row[2]
+
+                # the base URL of the web service
+                url = 'http://gisdata.usgs.gov/XMLWebServices/TNM_Elevation_Service.asmx/getElevation'
+
+                # url GET args
+                values = {'X_Value' : lon,
+                'Y_Value' : lat,
+                'Elevation_Units' : 'meters',
+                'Source_Layer' : '-1',
+                'Elevation_Only' : '1', }
+
+                # make some fake headers, with a user-agent that will
+                # not be rejected by bone-headed servers
+                user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
+                headers = {'User-Agent' : user_agent}
+
+                # encode the GET arguments
+                data = urllib.urlencode(values)
+
+                # make the URL into a qualified GET statement:
+                get_url = url + '?' + data
+
+                flag = 0
+                attempt = 1
+                while(flag == 0):
+                    try:
+                        # make the request: note that by ommitting the url arguments
+                        # we force a GET request, instead of a POST
+                        req = urllib2.Request(url=get_url, headers=headers)
+                        response = urllib2.urlopen(req)
+                        the_page = response.read()
+                        flag = 1
+                    except urllib2.URLError:
+                        attempt += 1
+                        print("request fail. trying attempt %s" %(attempt))
+
+                    # convert the HTML back into plain XML
+                    for entity, char in (('lt', '<'), ('gt', '>'), ('amp', '&')):
+                        the_page = the_page.replace('&%s;' % entity, char)
+
+                    # clean some cruft... XML won't parse with this stuff in there...
+                    the_page = the_page.replace('<string xmlns="http://gisdata.usgs.gov/XMLWebServices/">', '')
+                    the_page = the_page.replace('<?xml version="1.0" encoding="utf-8"?>\r\n', '')
+                    the_page = the_page.replace('</string>', '')
+                    the_page = the_page.replace('<!-- Elevation Values of -1.79769313486231E+308 (Negative Exponential Value) may mean the data source does not have values at that point.  --> <USGS_Elevation_Web_Service_Query>', '')
+
+                    # parse the cleaned XML
+                    dom = minidom.parseString(the_page)
+                    children = dom.getElementsByTagName('Elevation_Query')[0]
+
+                    # extract the interesting parts
+                    elev = float(children.getElementsByTagName('Elevation')[0].firstChild.data)
+                    data_source = children.getElementsByTagName('Data_Source')[0].firstChild.data
+
+                writer.writerow([lat, lon, name, elev])
+
+                progress_bar.update(row_num)
+
+            progress_bar.finish()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Wrangle RAAM GPS track to have consistent waypoint spacing.')
@@ -174,4 +273,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     raam_track = RaamTrack(args.route, args.timestations)
-    raam_track.clean()
+    raam_track.clean_route()
+    raam_track.add_elevation_to_route()
