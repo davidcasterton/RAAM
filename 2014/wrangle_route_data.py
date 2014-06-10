@@ -8,12 +8,11 @@ import progressbar
 import urllib, urllib2
 from xml.dom import minidom
 
-
+CLEAN_ROUTE_DIR = os.path.join(os.getcwd(), "timestation_waypoints")
+CLEAN_ROUTE_WITH_ELEV_DIR = os.path.join(os.getcwd(), "timestation_waypoints_with_elev")
 DEBUG = False
 MIN_WAYPOINT_MILES = 0.25
 MAX_WAYPOINT_MILES = 0.5
-CLEAN_ROUTE_DIR = os.path.join(os.getcwd(), "timestation_waypoints")
-CLEAN_ROUTE_WITH_ELEV_DIR = os.path.join(os.getcwd(), "timestation_waypoints_with_elev")
 
 
 class GpsWaypoint(object):
@@ -270,7 +269,10 @@ if __name__ == "__main__":
                         help='input file, offial RAAM route.')
     parser.add_argument('-timestations', type=argparse.FileType('r'), dest="timestations",
                         help='input file, offial RAAM timestation waypoints.')
+    parser.add_argument('-debug', type=bool, dest="debug", default=False,
+                        help='print debug.')
     args = parser.parse_args()
+    DEBUG = args.debug
 
     raam_track = RaamTrack(args.route, args.timestations)
     raam_track.clean_route()
